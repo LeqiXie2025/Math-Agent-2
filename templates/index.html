@@ -1,0 +1,2254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高数双语辅导助手 - Calculus Tutor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #7209b7;
+            --success-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gradient-primary: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --gradient-accent: linear-gradient(135deg, #7209b7, #f72585);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 40px rgba(0,0,0,0.15);
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6f7ff 100%);
+            color: var(--dark-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 头部样式 */
+        .header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 2.5rem 0 3rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .app-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(45deg, #fff, #4cc9f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .app-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .language-switcher {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .lang-btn.active {
+            background: rgba(255,255,255,0.3);
+            border-color: white;
+        }
+
+        .status-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.5rem;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #4caf50;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+        }
+
+        /* 主要内容区域 */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto 3rem;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        .panel {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .panel:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg), 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .panel-header {
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .panel-header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background: var(--gradient-accent);
+        }
+
+        .panel-title {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .panel-subtitle {
+            color: #666;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .icon-wrapper {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        /* 聊天容器 */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 500px;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.1);
+            border-radius: 3px;
+        }
+
+        .message {
+            margin-bottom: 1.25rem;
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-md);
+            max-width: 85%;
+            word-wrap: break-word;
+            animation: slideIn 0.3s ease-out;
+            position: relative;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-message {
+            background: var(--gradient-primary);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai-message {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            color: #333;
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* 上传区域 */
+        .upload-area {
+            border: 3px dashed #c5d3e0;
+            border-radius: var(--radius-md);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fafcff, #f2f7ff);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .upload-area:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .upload-area:hover::before {
+            opacity: 1;
+        }
+
+        .upload-area i {
+            font-size: 3.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .upload-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-subtext {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* 按钮样式 */
+        .btn-custom {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+            color: white;
+        }
+
+        .btn-outline-custom {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--gradient-primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* 输入框样式 */
+        .form-control-custom {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        .form-control-custom:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(114, 9, 183, 0.1);
+        }
+
+        /* 标签页样式 */
+        .nav-tabs-custom {
+            border-bottom: 2px solid #e2e8f0;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-tabs-custom .nav-link {
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            color: #64748b;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-tabs-custom .nav-link:hover {
+            color: var(--primary-color);
+            background: rgba(67, 97, 238, 0.05);
+        }
+
+        .nav-tabs-custom .nav-link.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+
+        .tab-content-custom {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 结果框样式 */
+        .result-box {
+            background: linear-gradient(135deg, #f0f9ff, #e6f7ff);
+            border-left: 4px solid var(--success-color);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin: 1rem 0;
+        }
+
+        .result-title {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .latex-output {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin: 0.75rem 0;
+            border: 1px solid #e2e8f0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        /* 加载动画 */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 文件预览 */
+        .file-preview {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .file-item {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+
+        .file-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* 历史记录 */
+        .history-item {
+            background: linear-gradient(135deg, #ffffff, #fafafa);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .history-item:hover {
+            transform: translateX(8px);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-link:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .app-title {
+                font-size: 2.2rem;
+            }
+
+            .app-subtitle {
+                font-size: 1rem;
+            }
+
+            .panel {
+                padding: 1.5rem;
+            }
+
+            .main-container {
+                padding: 0 1rem;
+            }
+
+            .language-switcher {
+                position: static;
+                margin-bottom: 1.5rem;
+                text-align: center;
+            }
+
+            .header {
+                padding: 2rem 0;
+            }
+
+            .status-card {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* 数学公式样式 */
+        mjx-container[jax="CHTML"] {
+            text-align: center;
+            margin: 1em 0;
+        }
+
+        /* 卡片样式 */
+        .feature-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* 提示框 */
+        .hint-box {
+            background: linear-gradient(135deg, #fff9db, #fff3bf);
+            border-left: 4px solid #f59f00;
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .hint-box i {
+            color: #f59f00;
+        }
+
+        /* 飞书专用样式 */
+        .feishu-card {
+            border: 2px solid #06b6d4;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        }
+
+        .feishu-badge {
+            background: linear-gradient(45deg, #06b6d4, #0ea5e9);
+            color: white;
+        }
+
+        .copy-btn {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #f8f9fa;
+        }
+
+        .config-step {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .webhook-url {
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        /* 工具提示 */
+        .tooltip-inner {
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            background: var(--dark-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header class="header">
+        <div class="header-content">
+            <div class="language-switcher">
+                <button class="lang-btn active" onclick="switchLanguage('zh')">
+                    <i class="fas fa-language"></i> 中文
+                </button>
+                <button class="lang-btn" onclick="switchLanguage('en')">
+                    <i class="fas fa-language"></i> English
+                </button>
+            </div>
+
+            <h1 class="app-title text-center">高数双语辅导助手</h1>
+            <p class="app-subtitle text-center">Calculus Bilingual Tutor · AI智能解答 · 实时计算 · 飞书集成</p>
+
+            <div class="text-center">
+                <div class="status-card">
+                    <div class="status-dot"></div>
+                    <span id="connection-status">正在连接服务器...</span>
+                    <span class="badge bg-light text-dark">端口 5656</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main>
+        <div class="main-container">
+            <!-- 左侧：详细解答助手 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        详细解答助手
+                    </div>
+                    <p class="panel-subtitle" id="tutor-subtitle">上传题目图片或文件，获取详细的AI解答和分步解析</p>
+                </div>
+
+                <!-- 连接状态 -->
+                <div class="alert alert-success" id="server-status" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <strong>服务器连接成功</strong> · 端口: 5656 · 服务运行正常
+                </div>
+
+                <!-- 上传区域 -->
+                <div class="upload-area" onclick="document.getElementById('fileInput').click()" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h5 class="upload-text" id="upload-text">点击或拖放上传文件</h5>
+                    <p class="upload-subtext" id="upload-subtext">支持图片、PDF、Word文档 (最大 16MB)</p>
+                </div>
+                <input type="file" id="fileInput" style="display: none;" accept=".png,.jpg,.jpeg,.gif,.pdf,.docx,.txt" multiple>
+                <div id="filePreview" class="mt-3"></div>
+
+                <!-- 聊天区域 -->
+                <div class="chat-container" id="chatContainer">
+                    <div class="message ai-message">
+                        <div class="message-header">
+                            <i class="fas fa-robot text-primary"></i>
+                            高数助手
+                        </div>
+                        欢迎使用高数双语辅导助手！我在这里帮助您解决微积分相关问题。<br><br>
+                        <strong>服务特性：</strong>
+                        <ul class="mb-0 mt-2">
+                            <li>🔍 支持中英文双语问答</li>
+                            <li>📚 提供详细的分步解答</li>
+                            <li>📁 支持文件上传和解析</li>
+                            <li>🧮 内置数学公式渲染</li>
+                            <li>⚡ 实时计算和练习生成</li>
+                            <li>🤖 飞书机器人集成</li>
+                        </ul>
+                        <br>
+                        当前服务运行在 <strong>端口 5656</strong>，状态正常。
+                    </div>
+                </div>
+
+                <!-- 输入区域 -->
+                <div class="input-group mt-3">
+                    <textarea class="form-control form-control-custom" id="questionInput" rows="3"
+                              placeholder="请输入您的高数问题，例如：'计算极限 lim(x→0) sin(x)/x' 或上传题目文件..." style="resize: none;"></textarea>
+                    <button class="btn btn-custom ms-2" onclick="sendQuestion()" id="sendBtn" style="height: fit-content;">
+                        <i class="fas fa-paper-plane"></i>
+                        <span id="send-text">发送</span>
+                    </button>
+                </div>
+
+                <!-- 加载动画 -->
+                <div class="loading" id="tutorLoading">
+                    <div class="spinner"></div>
+                    <p id="loading-text">AI正在思考，请稍候...</p>
+                    <small class="text-muted">服务运行在端口 5656</small>
+                </div>
+            </div>
+
+            <!-- 右侧：快速计算助手 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        快速计算助手
+                    </div>
+                    <p class="panel-subtitle" id="calc-subtitle">输入数学表达式，实时计算并生成练习题</p>
+                </div>
+
+                <!-- 标签页 -->
+                <ul class="nav nav-tabs nav-tabs-custom" id="calcTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="compute-tab" data-bs-toggle="tab"
+                                data-bs-target="#compute" type="button" role="tab">
+                            <i class="fas fa-calculator"></i>
+                            <span id="compute-tab-text">计算</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="practice-tab" data-bs-toggle="tab"
+                                data-bs-target="#practice" type="button" role="tab">
+                            <i class="fas fa-dumbbell"></i>
+                            <span id="practice-tab-text">练习题</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="history-tab" data-bs-toggle="tab"
+                                data-bs-target="#history" type="button" role="tab">
+                            <i class="fas fa-history"></i>
+                            <span id="history-tab-text">历史</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="feishu-tab" data-bs-toggle="tab"
+                                data-bs-target="#feishu" type="button" role="tab">
+                            <i class="fab fa-rocketchat"></i>
+                            飞书集成
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content tab-content-custom" id="calcTabContent">
+                    <!-- 计算标签页 -->
+                    <div class="tab-pane fade show active" id="compute" role="tabpanel">
+                        <div class="hint-box">
+                            <i class="fas fa-lightbulb"></i>
+                            <strong>使用提示：</strong> 输入数学表达式，支持 integrate(x**2, x), diff(sin(x), x), limit(sin(x)/x, x, 0) 等
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="calcInput" class="form-label">
+                                <i class="fas fa-keyboard"></i> 数学表达式：
+                            </label>
+                            <textarea class="form-control form-control-custom" id="calcInput" rows="3"
+                                      placeholder="例如：integrate(x**2, x) 计算积分，diff(sin(x), x) 计算导数，limit(sin(x)/x, x, 0) 计算极限"></textarea>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                            <button class="btn btn-custom me-md-2" onclick="calculate()">
+                                <i class="fas fa-equals"></i>
+                                <span id="calc-btn-text">计算</span>
+                            </button>
+                            <button class="btn btn-outline-custom" onclick="clearCalc()">
+                                <i class="fas fa-trash"></i>
+                                <span id="clear-btn-text">清空</span>
+                            </button>
+                        </div>
+
+                        <div id="calcResult"></div>
+
+                        <div class="loading" id="calcLoading">
+                            <div class="spinner"></div>
+                            <p id="calc-loading-text">正在计算中...</p>
+                        </div>
+                    </div>
+
+                    <!-- 练习题标签页 -->
+                    <div class="tab-pane fade" id="practice" role="tabpanel">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
+                            <h6>智能练习生成</h6>
+                            <p class="mb-0">根据您的选择生成个性化的高数练习题，附带详细解答。</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="topicSelect" class="form-label">
+                                <i class="fas fa-book"></i> 主题选择：
+                            </label>
+                            <select class="form-select form-control-custom" id="topicSelect">
+                                <option value="limits">极限与连续性</option>
+                                <option value="derivatives">导数与微分</option>
+                                <option value="integrals">积分学</option>
+                                <option value="series">无穷级数</option>
+                                <option value="multivariable">多元微积分</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="difficulty" class="form-label">
+                                <i class="fas fa-chart-line"></i> 难度等级：
+                                <span id="difficulty-value" class="badge bg-primary ms-2">3/5</span>
+                            </label>
+                            <input type="range" class="form-range" id="difficulty" min="1" max="5" value="3"
+                                   oninput="updateDifficulty(this.value)">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="questionCount" class="form-label">
+                                <i class="fas fa-list-ol"></i> 题目数量：
+                            </label>
+                            <input type="number" class="form-control form-control-custom" id="questionCount" min="1" max="10" value="3">
+                        </div>
+
+                        <button class="btn btn-custom w-100" onclick="generatePractice()">
+                            <i class="fas fa-plus-circle"></i>
+                            <span id="generate-btn-text">生成练习题</span>
+                        </button>
+
+                        <div id="practiceResult" class="mt-4"></div>
+                    </div>
+
+                    <!-- 历史记录标签页 -->
+                    <div class="tab-pane fade" id="history" role="tabpanel">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <h6>计算历史</h6>
+                            <p class="mb-0">点击历史记录可重新计算，最多保存50条记录。</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6><i class="fas fa-clock"></i> 最近计算</h6>
+                                <button class="btn btn-sm btn-outline-custom" onclick="clearHistory()">
+                                    <i class="fas fa-trash"></i>
+                                    <span id="clear-history-text">清空历史</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="list-group" id="historyList">
+                            <!-- 历史记录将在这里显示 -->
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <small class="text-muted">点击记录重新使用表达式</small>
+                        </div>
+                    </div>
+
+                    <!-- 飞书集成标签页 -->
+                    <div class="tab-pane fade" id="feishu" role="tabpanel">
+                        <div class="feature-card feishu-card">
+                            <div class="feature-icon" style="background: linear-gradient(45deg, #06b6d4, #0ea5e9);">
+                                <i class="fab fa-rocketchat"></i>
+                            </div>
+                            <h6>飞书机器人集成</h6>
+                            <p class="mb-0">将高数辅导助手集成到飞书，随时随地获取数学解答</p>
+                        </div>
+
+                        <!-- 连接状态 -->
+                        <div class="alert alert-info" id="feishu-status-alert">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-circle-notch fa-spin me-2"></i>
+                                <span>正在检查飞书连接状态...</span>
+                            </div>
+                        </div>
+
+                        <!-- 配置信息 -->
+                        <div class="card mb-3">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0"><i class="fas fa-cog me-2"></i>配置信息</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Webhook URL:</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="feishu-webhook-url" readonly>
+                                        <button class="btn btn-outline-primary copy-btn" onclick="copyWebhookUrl()">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <small class="text-muted">复制此URL到飞书开放平台的事件订阅配置</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">配置状态:</label>
+                                    <div id="feishu-config-status">
+                                        <span class="badge bg-secondary">未检测</span>
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    <strong>重要：</strong>请确保在 <code>.env</code> 文件中配置飞书相关参数：
+                                    <pre class="mt-2 mb-0">FEISHU_APP_ID=your_app_id
+FEISHU_APP_SECRET=your_app_secret</pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 配置指南 -->
+                        <div class="card mb-3">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0"><i class="fas fa-book me-2"></i>快速配置指南</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="config-step">
+                                    <strong>步骤1：创建飞书应用</strong>
+                                    <ul class="mb-0 mt-1">
+                                        <li>访问 <a href="https://open.feishu.cn/app" target="_blank">飞书开放平台</a></li>
+                                        <li>点击"创建企业自建应用"</li>
+                                        <li>填写应用信息，获取 App ID 和 App Secret</li>
+                                    </ul>
+                                </div>
+
+                                <div class="config-step">
+                                    <strong>步骤2：配置权限</strong>
+                                    <ul class="mb-0 mt-1">
+                                        <li>获取用户 user ID</li>
+                                        <li>获取用户基础信息</li>
+                                        <li>获取与发送单聊、群组消息</li>
+                                        <li>接收消息与事件</li>
+                                    </ul>
+                                </div>
+
+                                <div class="config-step">
+                                    <strong>步骤3：配置事件订阅</strong>
+                                    <ul class="mb-0 mt-1">
+                                        <li>设置请求地址为上面的Webhook URL</li>
+                                        <li>添加"接收消息"事件</li>
+                                        <li>获取并配置 Verification Token</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 测试功能 -->
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0"><i class="fas fa-vial me-2"></i>测试功能</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">测试消息:</label>
+                                    <textarea class="form-control" id="feishu-test-message" rows="2"
+                                            placeholder="输入测试消息内容..."></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">接收者ID (可选):</label>
+                                    <input type="text" class="form-control" id="feishu-receive-id"
+                                           placeholder="留空使用默认测试ID">
+                                    <small class="text-muted">可以是 open_id、user_id 或 chat_id</small>
+                                </div>
+
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" onclick="testFeishuConnection()">
+                                        <i class="fas fa-paper-plane me-2"></i>测试连接
+                                    </button>
+                                    <button class="btn btn-outline-primary" onclick="checkFeishuStatus()">
+                                        <i class="fas fa-sync-alt me-2"></i>刷新状态
+                                    </button>
+                                </div>
+
+                                <div id="feishu-test-result" class="mt-3"></div>
+                            </div>
+                        </div>
+
+                        <!-- 使用说明 -->
+                        <div class="mt-4">
+                            <div class="alert alert-success">
+                                <h6><i class="fas fa-lightbulb me-2"></i>使用说明</h6>
+                                <ul class="mb-0">
+                                    <li>配置完成后，在飞书中搜索应用名称即可找到机器人</li>
+                                    <li>发送数学问题，机器人会自动回复解答</li>
+                                    <li>支持文本、图片等多种消息格式</li>
+                                    <li>可在群聊或私聊中使用</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h5>高数双语辅导助手</h5>
+            <p>Calculus Bilingual Tutor · 为您的数学学习之旅提供智能支持</p>
+
+            <div class="footer-links">
+                <a href="#" class="footer-link">
+                    <i class="fas fa-question-circle"></i> 帮助中心
+                </a>
+                <a href="http://localhost:5656/health" class="footer-link" target="_blank">
+                    <i class="fas fa-heartbeat"></i> 健康检查
+                </a>
+                <a href="http://localhost:5656/api/config" class="footer-link" target="_blank">
+                    <i class="fas fa-cogs"></i> 系统配置
+                </a>
+                <a href="#" class="footer-link" onclick="showFeishuWebhook()">
+                    <i class="fab fa-rocketchat"></i> 飞书集成
+                </a>
+            </div>
+
+            <div class="mt-4">
+                <span class="badge bg-light text-dark me-2">
+                    <i class="fas fa-plug"></i> Port: 5656
+                </span>
+                <span id="api-status" class="badge bg-success">
+                    <i class="fas fa-check-circle"></i> 服务在线
+                </span>
+                <span id="feishu-api-status" class="badge bg-secondary ms-2" style="display: none;">
+                    <i class="fab fa-rocketchat"></i> 飞书
+                </span>
+            </div>
+
+            <p class="mt-3 mb-0" style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">
+                &copy; 2024 高数双语辅导助手 · 使用 Flask + DeepSeek AI + 飞书 技术构建 · 版本 2.0.0
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 全局变量
+        let currentLanguage = localStorage.getItem('preferredLanguage') || 'zh';
+        let chatHistory = [];
+        let calcHistory = JSON.parse(localStorage.getItem('calcHistory') || '[]');
+        let isConnected = false;
+        let connectionRetries = 0;
+
+        // 初始化
+        window.onload = function() {
+            // 加载保存的语言设置
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang) {
+                currentLanguage = savedLang;
+                switchLanguage(savedLang, true);
+            } else {
+                updateTexts();
+            }
+
+            // 初始连接检查
+            checkConnection();
+
+            // 初始化飞书状态
+            setTimeout(checkFeishuStatus, 500);
+
+            // 设置自动检查连接（每10秒）
+            setInterval(checkConnection, 10000);
+
+            // 文件上传处理
+            setupFileUpload();
+
+            // 更新历史列表
+            updateHistoryList();
+
+            // 初始化标签页
+            initializeTabs();
+
+            // 设置Webhook URL
+            updateWebhookUrl();
+        };
+
+        // 初始化标签页
+        function initializeTabs() {
+            const triggerTabList = [].slice.call(document.querySelectorAll('#calcTabs button'));
+            triggerTabList.forEach(function (triggerEl) {
+                const tabTrigger = new bootstrap.Tab(triggerEl);
+                triggerEl.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    tabTrigger.show();
+                });
+            });
+        }
+
+        // 更新Webhook URL
+        function updateWebhookUrl() {
+            const webhookInput = document.getElementById('feishu-webhook-url');
+            if (webhookInput) {
+                webhookInput.value = `${window.location.protocol}//${window.location.host}/api/feishu/webhook`;
+            }
+        }
+
+        // 检查服务器连接
+        async function checkConnection() {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+                const response = await fetch('/health', {
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    isConnected = true;
+                    connectionRetries = 0;
+
+                    // 更新状态显示
+                    document.getElementById('connection-status').innerHTML =
+                        '<i class="fas fa-check-circle"></i> 服务器连接正常';
+                    document.getElementById('server-status').style.display = 'block';
+                    document.getElementById('api-status').innerHTML = '<i class="fas fa-check-circle"></i> 服务在线';
+
+                    // 更新页面标题
+                    document.title = '高数双语辅导助手 (在线)';
+
+                } else {
+                    throw new Error('Server responded with error');
+                }
+            } catch (error) {
+                isConnected = false;
+                connectionRetries++;
+
+                // 更新状态显示
+                const statusMsg = connectionRetries < 3 ?
+                    '正在连接服务器...' : '连接服务器失败，请检查网络';
+
+                document.getElementById('connection-status').innerHTML =
+                    `<i class="fas fa-times-circle"></i> ${statusMsg}`;
+                document.getElementById('server-status').style.display = 'none';
+                document.getElementById('api-status').innerHTML = '<i class="fas fa-times-circle"></i> 连接失败';
+
+                document.title = '高数双语辅导助手 (离线)';
+
+                // 如果重试次数过多，显示更详细的错误
+                if (connectionRetries >= 3) {
+                    document.getElementById('server-status').style.display = 'block';
+                    document.getElementById('server-status').className = 'alert alert-danger';
+                    document.getElementById('server-status').innerHTML = `
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>连接失败</strong> · 请确保服务器运行在端口 5656，然后刷新页面重试
+                    `;
+                }
+            }
+        }
+
+        // 检查飞书状态
+        async function checkFeishuStatus() {
+            const statusAlert = document.getElementById('feishu-status-alert');
+            const configStatus = document.getElementById('feishu-config-status');
+            const feishuApiStatus = document.getElementById('feishu-api-status');
+
+            try {
+                const response = await fetch('/api/feishu/status');
+                const data = await response.json();
+
+                if (data.success) {
+                    if (data.enabled) {
+                        statusAlert.className = 'alert alert-success';
+                        statusAlert.innerHTML = `
+                            <i class="fas fa-check-circle me-2"></i>
+                            <strong>飞书机器人已启用</strong>
+                            <div class="mt-1">
+                                <small>Webhook URL: ${data.webhook_url}</small>
+                            </div>
+                        `;
+                        configStatus.innerHTML = '<span class="badge feishu-badge">已配置</span>';
+                        if (feishuApiStatus) {
+                            feishuApiStatus.style.display = 'inline-block';
+                            feishuApiStatus.className = 'badge feishu-badge ms-2';
+                            feishuApiStatus.innerHTML = '<i class="fab fa-rocketchat"></i> 飞书在线';
+                        }
+                    } else {
+                        statusAlert.className = 'alert alert-warning';
+                        statusAlert.innerHTML = `
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>飞书机器人未配置</strong>
+                            <div class="mt-1">
+                                <small>请在 .env 文件中配置飞书相关参数</small>
+                            </div>
+                        `;
+                        configStatus.innerHTML = '<span class="badge bg-warning">未配置</span>';
+                        if (feishuApiStatus) {
+                            feishuApiStatus.style.display = 'inline-block';
+                            feishuApiStatus.className = 'badge bg-warning ms-2';
+                            feishuApiStatus.innerHTML = '<i class="fab fa-rocketchat"></i> 飞书未配置';
+                        }
+                    }
+                } else {
+                    throw new Error(data.error || '检查状态失败');
+                }
+            } catch (error) {
+                statusAlert.className = 'alert alert-danger';
+                statusAlert.innerHTML = `
+                    <i class="fas fa-times-circle me-2"></i>
+                    <strong>连接失败</strong>
+                    <div class="mt-1">
+                        <small>${error.message}</small>
+                    </div>
+                `;
+                configStatus.innerHTML = '<span class="badge bg-danger">错误</span>';
+                if (feishuApiStatus) {
+                    feishuApiStatus.style.display = 'inline-block';
+                    feishuApiStatus.className = 'badge bg-danger ms-2';
+                    feishuApiStatus.innerHTML = '<i class="fab fa-rocketchat"></i> 飞书错误';
+                }
+            }
+        }
+
+        // 语言切换
+        function switchLanguage(lang, initial = false) {
+            if (!initial) {
+                localStorage.setItem('preferredLanguage', lang);
+            }
+
+            currentLanguage = lang;
+
+            // 更新语言按钮状态
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event?.target?.classList?.add('active');
+
+            updateTexts();
+        }
+
+        // 更新界面文本
+        function updateTexts() {
+            const texts = {
+                'zh': {
+                    // 应用标题
+                    'app-title': '高数双语辅导助手',
+                    'app-subtitle': 'Calculus Bilingual Tutor · AI智能解答 · 实时计算 · 飞书集成',
+
+                    // 左侧面板
+                    'tutor-subtitle': '上传题目图片或文件，获取详细的AI解答和分步解析',
+                    'upload-text': '点击或拖放上传文件',
+                    'upload-subtext': '支持图片、PDF、Word文档 (最大 16MB)',
+                    'questionPlaceholder': '请输入您的高数问题，例如："计算极限 lim(x→0) sin(x)/x" 或上传题目文件...',
+                    'sendBtn': '发送',
+                    'send-text': '发送',
+                    'loading-text': 'AI正在思考，请稍候...',
+
+                    // 右侧面板
+                    'calc-subtitle': '输入数学表达式，实时计算并生成练习题',
+                    'compute-tab-text': '计算',
+                    'practice-tab-text': '练习题',
+                    'history-tab-text': '历史',
+                    'calcPlaceholder': '例如：integrate(x**2, x) 计算积分，diff(sin(x), x) 计算导数，limit(sin(x)/x, x, 0) 计算极限',
+                    'calcBtn': '计算',
+                    'calc-btn-text': '计算',
+                    'clearBtn': '清空',
+                    'clear-btn-text': '清空',
+                    'generate-btn-text': '生成练习题',
+                    'clear-history-text': '清空历史',
+                    'calc-loading-text': '正在计算中...',
+
+                    // 其他文本
+                    'topicLimit': '极限与连续性',
+                    'topicDerivative': '导数与微分',
+                    'topicIntegral': '积分学',
+                    'topicSeries': '无穷级数',
+                    'topicMultivariable': '多元微积分'
+                },
+                'en': {
+                    // 应用标题
+                    'app-title': 'Calculus Bilingual Tutor',
+                    'app-subtitle': 'Calculus Bilingual Tutor · AI Solutions · Real-time Computing · Feishu Integration',
+
+                    // 左侧面板
+                    'tutor-subtitle': 'Upload problem images or files for detailed AI solutions and step-by-step analysis',
+                    'upload-text': 'Click or drag to upload files',
+                    'upload-subtext': 'Supports images, PDF, Word documents (Max 16MB)',
+                    'questionPlaceholder': 'Please enter your calculus question, e.g., "Evaluate limit lim(x→0) sin(x)/x" or upload problem file...',
+                    'sendBtn': 'Send',
+                    'send-text': 'Send',
+                    'loading-text': 'AI is thinking, please wait...',
+
+                    // 右侧面板
+                    'calc-subtitle': 'Enter mathematical expressions for real-time calculation and practice problems',
+                    'compute-tab-text': 'Calculate',
+                    'practice-tab-text': 'Practice',
+                    'history-tab-text': 'History',
+                    'calcPlaceholder': 'e.g., integrate(x**2, x) for integration, diff(sin(x), x) for derivative, limit(sin(x)/x, x, 0) for limit',
+                    'calcBtn': 'Calculate',
+                    'calc-btn-text': 'Calculate',
+                    'clearBtn': 'Clear',
+                    'clear-btn-text': 'Clear',
+                    'generate-btn-text': 'Generate Practice Problems',
+                    'clear-history-text': 'Clear History',
+                    'calc-loading-text': 'Calculating...',
+
+                    // 其他文本
+                    'topicLimit': 'Limits and Continuity',
+                    'topicDerivative': 'Derivatives and Differentiation',
+                    'topicIntegral': 'Integration',
+                    'topicSeries': 'Infinite Series',
+                    'topicMultivariable': 'Multivariable Calculus'
+                }
+            };
+
+            const langTexts = texts[currentLanguage];
+            for (const [id, text] of Object.entries(langTexts)) {
+                const element = document.getElementById(id);
+                if (element) {
+                    if (id.includes('Placeholder')) {
+                        element.placeholder = text;
+                    } else {
+                        element.textContent = text;
+                    }
+                }
+            }
+
+            // 更新主题选择选项
+            updateTopicOptions();
+        }
+
+        // 更新主题选项
+        function updateTopicOptions() {
+            const topicSelect = document.getElementById('topicSelect');
+            if (topicSelect) {
+                const options = {
+                    'zh': [
+                        { value: 'limits', text: '极限与连续性' },
+                        { value: 'derivatives', text: '导数与微分' },
+                        { value: 'integrals', text: '积分学' },
+                        { value: 'series', text: '无穷级数' },
+                        { value: 'multivariable', text: '多元微积分' }
+                    ],
+                    'en': [
+                        { value: 'limits', text: 'Limits and Continuity' },
+                        { value: 'derivatives', text: 'Derivatives and Differentiation' },
+                        { value: 'integrals', text: 'Integration' },
+                        { value: 'series', text: 'Infinite Series' },
+                        { value: 'multivariable', text: 'Multivariable Calculus' }
+                    ]
+                };
+
+                const selectedValue = topicSelect.value;
+                topicSelect.innerHTML = '';
+                options[currentLanguage].forEach(option => {
+                    const opt = document.createElement('option');
+                    opt.value = option.value;
+                    opt.textContent = option.text;
+                    if (option.value === selectedValue) {
+                        opt.selected = true;
+                    }
+                    topicSelect.appendChild(opt);
+                });
+            }
+        }
+
+        // 更新难度显示
+        function updateDifficulty(value) {
+            const difficultyValue = document.getElementById('difficulty-value');
+            difficultyValue.textContent = `${value}/5`;
+
+            // 更新难度标签颜色
+            const colors = ['success', 'info', 'primary', 'warning', 'danger'];
+            difficultyValue.className = `badge bg-${colors[value-1]} ms-2`;
+        }
+
+        // 复制Webhook URL
+        function copyWebhookUrl() {
+            const webhookInput = document.getElementById('feishu-webhook-url');
+            if (!webhookInput) return;
+
+            webhookInput.select();
+            webhookInput.setSelectionRange(0, 99999);
+
+            try {
+                navigator.clipboard.writeText(webhookInput.value);
+                showNotification('Webhook URL已复制到剪贴板', 'success');
+            } catch (err) {
+                console.error('复制失败:', err);
+                showNotification('复制失败', 'error');
+            }
+        }
+
+        // 测试飞书连接
+        async function testFeishuConnection() {
+            const message = document.getElementById('feishu-test-message').value.trim();
+            const receiveId = document.getElementById('feishu-receive-id').value.trim() || 'test_user';
+            const resultDiv = document.getElementById('feishu-test-result');
+
+            if (!message) {
+                showNotification('请输入测试消息内容', 'warning');
+                return;
+            }
+
+            resultDiv.innerHTML = `
+                <div class="alert alert-info">
+                    <i class="fas fa-spinner fa-spin me-2"></i>
+                    正在发送测试消息...
+                </div>
+            `;
+
+            try {
+                const response = await fetch('/api/feishu/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: `[测试消息] ${message}`,
+                        receive_id: receiveId,
+                        msg_type: 'text'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <strong>测试成功</strong>
+                            <div class="mt-1">
+                                <small>消息发送成功</small>
+                            </div>
+                        </div>
+                    `;
+                    showNotification('测试消息发送成功', 'success');
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>测试失败</strong>
+                            <div class="mt-1">
+                                <small>${data.error || '未知错误'}</small>
+                            </div>
+                        </div>
+                    `;
+                    showNotification('测试消息发送失败', 'error');
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-times-circle me-2"></i>
+                        <strong>连接错误</strong>
+                        <div class="mt-1">
+                            <small>${error.message}</small>
+                        </div>
+                    </div>
+                `;
+                showNotification('网络连接错误', 'error');
+            }
+        }
+
+        // 显示飞书webhook信息
+        function showFeishuWebhook() {
+            const feishuTab = document.getElementById('feishu-tab');
+            if (feishuTab) {
+                const tab = new bootstrap.Tab(feishuTab);
+                tab.show();
+            }
+        }
+
+        // 设置文件上传
+        function setupFileUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.getElementById('uploadArea');
+
+            if (!fileInput || !uploadArea) return;
+
+            fileInput.addEventListener('change', handleFileUpload);
+
+            // 拖放支持
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, preventDefaults, false);
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight() {
+                uploadArea.style.borderColor = '#7209b7';
+                uploadArea.style.transform = 'translateY(-5px)';
+                uploadArea.style.boxShadow = '0 8px 25px rgba(114, 9, 183, 0.2)';
+            }
+
+            function unhighlight() {
+                uploadArea.style.borderColor = '#c5d3e0';
+                uploadArea.style.transform = 'translateY(0)';
+                uploadArea.style.boxShadow = 'none';
+            }
+
+            uploadArea.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                handleFileUpload({ target: { files: files } });
+            }
+        }
+
+        // 处理文件上传
+        function handleFileUpload(event) {
+            const files = event.target.files || event.dataTransfer?.files;
+            const previewDiv = document.getElementById('filePreview');
+
+            if (!previewDiv) return;
+
+            previewDiv.innerHTML = '';
+
+            if (!files || files.length === 0) {
+                showNotification('请选择文件', 'warning');
+                return;
+            }
+
+            // 限制文件数量
+            const fileList = Array.from(files).slice(0, 5);
+
+            fileList.forEach((file, index) => {
+                // 检查文件大小（16MB限制）
+                if (file.size > 16 * 1024 * 1024) {
+                    showNotification(`文件 ${file.name} 超过16MB限制`, 'error');
+                    return;
+                }
+
+                const fileDiv = document.createElement('div');
+                fileDiv.className = 'file-item';
+                fileDiv.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <i class="fas fa-file-pdf text-danger" style="font-size: 2rem;"></i>
+                        </div>
+                        <div>
+                            <div class="fw-bold">${file.name}</div>
+                            <div class="text-muted small">${formatFileSize(file.size)} · ${file.type || '未知类型'}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-success me-2" onclick="processFile(${index})">
+                            <i class="fas fa-play"></i> 处理
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="removeFile(${index})">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+                previewDiv.appendChild(fileDiv);
+            });
+
+            // 保存文件引用
+            window.uploadedFiles = fileList;
+        }
+
+        // 格式化文件大小
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // 移除文件
+        function removeFile(index) {
+            window.uploadedFiles?.splice(index, 1);
+            const previewDiv = document.getElementById('filePreview');
+            if (previewDiv) {
+                const fileItem = previewDiv.children[index];
+                if (fileItem) {
+                    fileItem.style.transform = 'translateX(-100%)';
+                    fileItem.style.opacity = '0';
+                    setTimeout(() => {
+                        fileItem.remove();
+                        updateFileList();
+                    }, 300);
+                }
+            }
+        }
+
+        // 更新文件列表显示
+        function updateFileList() {
+            const previewDiv = document.getElementById('filePreview');
+            if (previewDiv && window.uploadedFiles) {
+                const fileItems = previewDiv.querySelectorAll('.file-item');
+                fileItems.forEach((item, index) => {
+                    const buttons = item.querySelectorAll('button');
+                    buttons.forEach(btn => {
+                        btn.onclick = function() {
+                            const action = btn.classList.contains('btn-success') ? 'processFile' : 'removeFile';
+                            window[action](index);
+                        };
+                    });
+                });
+            }
+        }
+
+        // 处理文件
+        async function processFile(index) {
+            if (!window.uploadedFiles || !window.uploadedFiles[index]) {
+                showNotification('文件不存在', 'error');
+                return;
+            }
+
+            const file = window.uploadedFiles[index];
+            const button = document.querySelector(`.file-item:nth-child(${index + 1}) .btn-success`);
+
+            if (button) {
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 上传中...';
+                button.disabled = true;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            // 显示加载
+            document.getElementById('tutorLoading').style.display = 'block';
+
+            try {
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showNotification('文件上传成功', 'success');
+
+                    // 添加到聊天
+                    addMessage(`已上传文件: ${file.name}\n\n提取内容:\n${data.text}`, 'user');
+
+                    // 自动发送到AI处理
+                    setTimeout(() => {
+                        const questionInput = document.getElementById('questionInput');
+                        if (questionInput) {
+                            questionInput.value = data.text;
+                            sendQuestion();
+                        }
+                    }, 1000);
+                } else {
+                    showNotification(`文件处理失败: ${data.error || '未知错误'}`, 'error');
+                    addMessage(`文件处理失败: ${data.error || '未知错误'}`, 'ai');
+                }
+            } catch (error) {
+                console.error('上传失败:', error);
+                showNotification('文件上传失败，请重试', 'error');
+                addMessage('文件上传失败，请检查网络连接。', 'ai');
+            } finally {
+                document.getElementById('tutorLoading').style.display = 'none';
+                if (button) {
+                    button.innerHTML = '<i class="fas fa-check"></i> 完成';
+                    setTimeout(() => {
+                        button.innerHTML = '<i class="fas fa-play"></i> 处理';
+                        button.disabled = false;
+                    }, 2000);
+                }
+            }
+        }
+
+        // 显示通知
+        function showNotification(message, type = 'info') {
+            const colors = {
+                'info': 'var(--primary-color)',
+                'success': '#4caf50',
+                'warning': '#ff9800',
+                'error': '#f44336'
+            };
+
+            // 创建通知元素
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: white;
+                color: #333;
+                padding: 1rem 1.5rem;
+                border-radius: var(--radius-sm);
+                box-shadow: var(--shadow-lg);
+                border-left: 4px solid ${colors[type]};
+                z-index: 9999;
+                min-width: 300px;
+                transform: translateX(100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+            `;
+
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"
+                       style="color: ${colors[type]}; margin-right: 0.75rem; font-size: 1.2rem;"></i>
+                    <div>${message}</div>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+
+            // 显示动画
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+                notification.style.opacity = '1';
+            }, 10);
+
+            // 3秒后移除
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // 发送问题
+        async function sendQuestion() {
+            if (!isConnected) {
+                showNotification('服务器未连接，请检查网络', 'error');
+                return;
+            }
+
+            const input = document.getElementById('questionInput');
+            if (!input) return;
+
+            const question = input.value.trim();
+
+            if (!question) {
+                showNotification('请输入问题！', 'warning');
+                return;
+            }
+
+            // 添加到聊天记录
+            addMessage(question, 'user');
+            input.value = '';
+
+            // 显示加载
+            document.getElementById('tutorLoading').style.display = 'block';
+
+            try {
+                const response = await fetch('/api/ask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        question: question,
+                        language: currentLanguage
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    addMessage(data.answer, 'ai');
+
+                    // 保存到历史
+                    chatHistory.push({
+                        question: question,
+                        answer: data.answer,
+                        timestamp: new Date().toISOString()
+                    });
+
+                    showNotification('问题已提交，AI正在解答', 'success');
+                } else {
+                    addMessage(data.error || '请求失败，请稍后重试', 'ai');
+                    showNotification('处理问题失败', 'error');
+                }
+
+            } catch (error) {
+                console.error('发送失败:', error);
+                addMessage(currentLanguage === 'zh' ?
+                    '请求失败，请检查服务器连接。服务运行在端口 5656。' :
+                    'Request failed, please check server connection. Service runs on port 5656.', 'ai');
+                showNotification('网络连接错误', 'error');
+            } finally {
+                document.getElementById('tutorLoading').style.display = 'none';
+                MathJax.typesetPromise?.().catch((err) => console.log('MathJax error:', err));
+            }
+        }
+
+        // 添加到聊天界面
+        function addMessage(text, sender) {
+            const container = document.getElementById('chatContainer');
+            if (!container) return;
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+
+            const senderName = sender === 'user' ?
+                `<i class="fas fa-user text-success"></i> ${currentLanguage === 'zh' ? '你' : 'You'}` :
+                `<i class="fas fa-robot text-primary"></i> ${currentLanguage === 'zh' ? '高数助手' : 'Math Assistant'}`;
+
+            messageDiv.innerHTML = `
+                <div class="message-header">
+                    ${senderName}
+                </div>
+                <div>${text}</div>
+            `;
+
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // 计算功能
+        async function calculate() {
+            if (!isConnected) {
+                showNotification('服务器未连接，请检查网络', 'error');
+                return;
+            }
+
+            const input = document.getElementById('calcInput');
+            if (!input) return;
+
+            const expression = input.value.trim();
+
+            if (!expression) {
+                showNotification('请输入表达式！', 'warning');
+                return;
+            }
+
+            document.getElementById('calcLoading').style.display = 'block';
+
+            try {
+                const response = await fetch('/api/calculate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        expression: expression
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // 显示结果
+                    const resultDiv = document.getElementById('calcResult');
+                    resultDiv.innerHTML = `
+                        <div class="result-box">
+                            <div class="result-title">
+                                <i class="fas fa-keyboard"></i> ${currentLanguage === 'zh' ? '输入：' : 'Input：'}
+                            </div>
+                            <div class="latex-output">${expression}</div>
+                            <div class="result-title">
+                                <i class="fas fa-equals"></i> ${currentLanguage === 'zh' ? '结果：' : 'Result：'}
+                            </div>
+                            <div class="latex-output">${data.result}</div>
+                            ${data.steps ? `
+                                <div class="result-title">
+                                    <i class="fas fa-list-ol"></i> ${currentLanguage === 'zh' ? '步骤：' : 'Steps：'}
+                                </div>
+                                <div class="latex-output">${data.steps}</div>
+                            ` : ''}
+                            ${data.numerical && data.numerical !== 'N/A' ? `
+                                <div class="result-title">
+                                    <i class="fas fa-calculator"></i> ${currentLanguage === 'zh' ? '数值：' : 'Numerical：'}
+                                </div>
+                                <div class="latex-output">${data.numerical}</div>
+                            ` : ''}
+                        </div>
+                    `;
+
+                    // 保存到历史
+                    calcHistory.push({
+                        expression: expression,
+                        result: data.result,
+                        steps: data.steps,
+                        timestamp: new Date().toISOString()
+                    });
+
+                    // 限制历史记录数量
+                    if (calcHistory.length > 50) {
+                        calcHistory = calcHistory.slice(-50);
+                    }
+
+                    // 保存到localStorage
+                    localStorage.setItem('calcHistory', JSON.stringify(calcHistory));
+
+                    updateHistoryList();
+                    showNotification('计算完成', 'success');
+
+                } else {
+                    document.getElementById('calcResult').innerHTML = `
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            ${data.error || (currentLanguage === 'zh' ? '计算失败' : 'Calculation failed')}
+                        </div>
+                    `;
+                    showNotification('计算失败', 'error');
+                }
+
+            } catch (error) {
+                console.error('计算失败:', error);
+                document.getElementById('calcResult').innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        ${currentLanguage === 'zh' ? '计算失败：' : 'Calculation failed：'} ${error.message}
+                    </div>
+                `;
+                showNotification('网络连接错误', 'error');
+            } finally {
+                document.getElementById('calcLoading').style.display = 'none';
+                MathJax.typesetPromise?.().catch((err) => console.log('MathJax error:', err));
+            }
+        }
+
+        // 生成练习题
+        async function generatePractice() {
+            if (!isConnected) {
+                showNotification('服务器未连接，请检查网络', 'error');
+                return;
+            }
+
+            const topic = document.getElementById('topicSelect')?.value || 'limits';
+            const difficulty = document.getElementById('difficulty')?.value || 3;
+            const count = document.getElementById('questionCount')?.value || 3;
+
+            const resultDiv = document.getElementById('practiceResult');
+            if (!resultDiv) return;
+
+            resultDiv.innerHTML = `
+                <div class="text-center">
+                    <div class="spinner"></div>
+                    <p>${currentLanguage === 'zh' ? '正在生成练习题...' : 'Generating practice problems...'}</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch('/api/generate-practice', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        topic: topic,
+                        difficulty: parseInt(difficulty),
+                        count: parseInt(count),
+                        language: currentLanguage
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    let html = `
+                        <h5 class="mb-3">
+                            <i class="fas fa-list-check"></i>
+                            ${currentLanguage === 'zh' ? '生成的练习题：' : 'Generated Practice Problems：'}
+                            <span class="badge bg-primary ms-2">${data.count}</span>
+                        </h5>
+                    `;
+
+                    data.questions.forEach((q, index) => {
+                        html += `
+                            <div class="card mb-3 border-0 shadow-sm">
+                                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                    <span>
+                                        <i class="fas fa-question-circle me-2"></i>
+                                        ${currentLanguage === 'zh' ? '题目' : 'Problem'} ${index + 1}
+                                    </span>
+                                    <span class="badge bg-${q.difficulty <= 2 ? 'success' : q.difficulty <= 4 ? 'warning' : 'danger'}">
+                                        ${currentLanguage === 'zh' ? '难度' : 'Difficulty'}: ${q.difficulty}/5
+                                    </span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="latex-output mb-3">${q.question}</div>
+                                    ${q.hint ? `
+                                        <div class="alert alert-info">
+                                            <i class="fas fa-lightbulb"></i>
+                                            ${currentLanguage === 'zh' ? '提示：' : 'Hint：'} ${q.hint}
+                                        </div>
+                                    ` : ''}
+                                    ${q.answer ? `
+                                        <button class="btn btn-sm btn-outline-success" onclick="toggleAnswer(${index})">
+                                            <i class="fas fa-eye"></i>
+                                            ${currentLanguage === 'zh' ? '显示答案' : 'Show Answer'}
+                                        </button>
+                                        <div id="answer-${index}" style="display: none;" class="mt-3">
+                                            <div class="alert alert-success">
+                                                <i class="fas fa-check-circle"></i>
+                                                <strong>${currentLanguage === 'zh' ? '答案：' : 'Answer：'}</strong>
+                                                <div class="latex-output mt-2">${q.answer}</div>
+                                            </div>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    resultDiv.innerHTML = html;
+                    showNotification(`成功生成 ${data.count} 道练习题`, 'success');
+
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            ${data.error || (currentLanguage === 'zh' ? '生成练习题失败' : 'Failed to generate practice problems')}
+                        </div>
+                    `;
+                    showNotification('生成练习题失败', 'error');
+                }
+
+            } catch (error) {
+                console.error('生成失败:', error);
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        ${currentLanguage === 'zh' ? '生成练习题失败：' : 'Failed to generate practice problems：'} ${error.message}
+                    </div>
+                `;
+                showNotification('网络连接错误', 'error');
+            } finally {
+                MathJax.typesetPromise?.().catch((err) => console.log('MathJax error:', err));
+            }
+        }
+
+        // 切换答案显示
+        function toggleAnswer(index) {
+            const answerDiv = document.getElementById(`answer-${index}`);
+            const button = answerDiv?.previousElementSibling;
+
+            if (!answerDiv || !button) return;
+
+            if (answerDiv.style.display === 'none') {
+                answerDiv.style.display = 'block';
+                button.innerHTML = `
+                    <i class="fas fa-eye-slash"></i>
+                    ${currentLanguage === 'zh' ? '隐藏答案' : 'Hide Answer'}
+                `;
+            } else {
+                answerDiv.style.display = 'none';
+                button.innerHTML = `
+                    <i class="fas fa-eye"></i>
+                    ${currentLanguage === 'zh' ? '显示答案' : 'Show Answer'}
+                `;
+            }
+            MathJax.typesetPromise?.().catch((err) => console.log('MathJax error:', err));
+        }
+
+        // 更新历史列表
+        function updateHistoryList() {
+            const historyList = document.getElementById('historyList');
+            if (!historyList) return;
+
+            historyList.innerHTML = '';
+
+            if (calcHistory.length === 0) {
+                historyList.innerHTML = `
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        ${currentLanguage === 'zh' ? '暂无历史记录' : 'No history yet'}
+                    </div>
+                `;
+                return;
+            }
+
+            // 显示最近记录（倒序显示）
+            calcHistory.slice().reverse().forEach((item, index) => {
+                if (index >= 10) return; // 最多显示10条
+
+                const div = document.createElement('div');
+                div.className = 'history-item';
+
+                const time = new Date(item.timestamp).toLocaleString();
+                const exprPreview = item.expression.length > 30 ?
+                    item.expression.substring(0, 30) + '...' : item.expression;
+
+                const resultPreview = item.result?.replace(/<[^>]*>/g, '').substring(0, 50) + '...';
+
+                div.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div style="flex: 1;">
+                            <small class="text-muted d-block mb-1">
+                                <i class="fas fa-clock"></i> ${time}
+                            </small>
+                            <div class="fw-bold text-truncate">${exprPreview}</div>
+                            <small class="text-muted">→ ${resultPreview}</small>
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary" onclick="useHistoryExpression(${index})">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                    </div>
+                `;
+
+                // 添加点击事件
+                div.onclick = function() {
+                    useHistoryExpression(index);
+                };
+
+                historyList.appendChild(div);
+            });
+        }
+
+        // 使用历史表达式
+        function useHistoryExpression(index) {
+            const historyIndex = calcHistory.length - 1 - index;
+            const item = calcHistory[historyIndex];
+
+            if (item && item.expression) {
+                const input = document.getElementById('calcInput');
+                if (input) {
+                    input.value = item.expression;
+                    // 切换到计算标签页
+                    document.getElementById('compute-tab').click();
+                    showNotification('已加载历史表达式', 'info');
+                }
+            }
+        }
+
+        // 清空计算
+        function clearCalc() {
+            const input = document.getElementById('calcInput');
+            const result = document.getElementById('calcResult');
+
+            if (input) input.value = '';
+            if (result) result.innerHTML = '';
+
+            showNotification('已清空输入和结果', 'info');
+        }
+
+        // 清空历史
+        function clearHistory() {
+            if (confirm(currentLanguage === 'zh' ?
+                '确定要清空所有历史记录吗？此操作不可撤销。' :
+                'Are you sure you want to clear all history? This action cannot be undone.')) {
+
+                calcHistory = [];
+                localStorage.setItem('calcHistory', JSON.stringify([]));
+                updateHistoryList();
+                showNotification('已清空历史记录', 'success');
+            }
+        }
+
+        // 页面卸载前保存状态
+        window.addEventListener('beforeunload', function() {
+            localStorage.setItem('calcHistory', JSON.stringify(calcHistory));
+        });
+    </script>
+</body>
+</html>
